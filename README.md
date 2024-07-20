@@ -28,4 +28,5 @@ $env:FLASK_ENV = "development"
 ```
 
 <h3 align="left">captura del api</h3>
-![captura_de_pantalla](image\result_api.png)
+
+![image](https://github.com/user-attachments/assets/08973a93-2cbe-4c6a-9db6-6774b3e03477)
