@@ -17,7 +17,7 @@ def authenticate():
 
 @app.route('/')
 def home():
-    return f"Hola, la API se ha desplegado correctamente. Token esperado: {API_TOKEN}"
+    return "Hola, la API se ha desplegado correctamente."
 
 @app.route('/api/animales', methods=['GET'])
 def get_animales():
