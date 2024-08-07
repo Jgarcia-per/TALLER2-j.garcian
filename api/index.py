@@ -1,4 +1,5 @@
-from flask import Flask, jsonify
+import os
+from flask import Flask, jsonify, request, abort
 from preparacion.perro import Perro
 from preparacion.gato import Gato
 from huronesyBoas.huron import Huron
@@ -6,8 +7,24 @@ from huronesyBoas.boa_constrictor import BoaConstrictor
 
 app = Flask(__name__)
 
+API_TOKEN = os.getenv('API_TOKEN', 'default_token')
+
+def check_auth(token):
+    return token == API_TOKEN
+
+def authenticate():
+    abort(401, description="Unauthorized")
+
+@app.route('/')
+def home():
+    return f"Hola, la API se ha desplegado correctamente. Token esperado: {API_TOKEN}"
+
 @app.route('/api/animales', methods=['GET'])
 def get_animales():
+    token = request.headers.get('Authorization')
+    if not token or not check_auth(token):
+        return authenticate()
+    
     perro = Perro("Zeus", "Rottweiler", 45.8, 3)
     gato = Gato("Luna", 3.2, 2, "Blanco")
     huron = Huron("Fuzz", 1.2, 2, "USA", 50.0)
@@ -54,4 +71,4 @@ def get_animales():
     return jsonify(animales)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
